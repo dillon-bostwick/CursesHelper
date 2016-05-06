@@ -1,4 +1,4 @@
-# CursesWrangler
+# CursesHelper
 
 Many novice C++ programmers want to easily build TUIs but are often restricted to using the standard i/o stream to make a command line interface. The best they can aim for are little hacky tricks like carriage return, etc.
 
