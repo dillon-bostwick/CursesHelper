@@ -13,7 +13,7 @@
 
 using namespace std;
 
-//Calls a variety of NCurses methods to initialize the SharkBatch I/O environment
+//Calls to initiate I/O environment
 CursesHandler::CursesHandler() {
 	initscr(); //startup ncurses and initialize the stdscr (terminal window object)
 	cbreak(); //disables line buffering
@@ -29,7 +29,7 @@ CursesHandler::CursesHandler() {
 		refresh();
 	} while (consoleHeight < MIN_HEIGHT || consoleWidth < MIN_WIDTH);
 	
-	noecho(); //echo prints user input tot he current location of the cursor. We want to
+	noecho(); //echo prints user input to the current location of the cursor. We want to
 			  //start with noecho() by default for the main menu but can turn it on later
 	
 	currentFeedRow = FEED_ROW;
@@ -37,64 +37,15 @@ CursesHandler::CursesHandler() {
 	refresh(); //Syncs the buffer with the stdscr window
 }
 
-//The destructor returns the terminal to it's original state (if SharkBatch terminates and
+//Returns the terminal to it's original state (if program terminates and
 //there are some messy text wrapping issues in your terminal, it's probably because this
 //destructor was not called at the right time)
 CursesHandler::~CursesHandler() {
 	printw("\n"); //puts the command line cursor beneath where we were working
 	curs_set(1); //make cursor visible again
-	endwin(); //terminates NCureses mode and the stdscr object
+	endwin(); //terminate NCureses mode and the stdscr object
 	cerr << "Sucessfully exited\n";
 }
-
-//SharkBatch calls wireframe to create the UI skeleton of the entire program. Here, each
-//"bar" is given a nice border and title in the appropriate place. For row numbers, the
-//constant bar row specifiers are not used to make it easier to make adjustments to the UI
-//in the future.
-void CursesHandler::wireframe(int numQueues) {
-	mvprintw(0, COL_LOCATION, "----------------------------------------------------------"
-							  "--------------------------");
-	mvprintw(1, COL_LOCATION, "MENU");
-	mvprintw(2, COL_LOCATION, "----");
-	
-	mvprintw(4, COL_LOCATION, "----------------------------------------------------------"
-							  "--------------------------");
-	mvprintw(5, COL_LOCATION, "CONSOLE");
-	mvprintw(6, COL_LOCATION, "-------");
-	
-	mvprintw(14, COL_LOCATION, "---------------------------------------------------------"
-							   "---------------------------");
-	mvprintw(15, COL_LOCATION, "STATUS OVERVIEW");
-	mvprintw(16, COL_LOCATION, "---------------");
-	
-	mvprintw(19, COL_LOCATION, "Priority:");
-	
-	//print the priority numbers based on the passed int numQueues
-	for (int i = 0; i < numQueues; i++) {
-		mvprintw(19, 15 + i * 4, "%d |", i);
-	}
-	
-	mvprintw(19, 15 + numQueues * 4, "W");
-	
-	mvprintw(22, COL_LOCATION, "---------------------------------------------------------"
-							   "---------------------------");
-	mvprintw(23, COL_LOCATION, "CURRENT CORE THREAD");
-	mvprintw(24, COL_LOCATION, "-------------------");
-	
-	mvprintw(29, COL_LOCATION, "---------------------------------------------------------"
-							   "---------------------------");
-	mvprintw(30, COL_LOCATION, "LOG");
-	mvprintw(31, COL_LOCATION, "---");
-
-	mvprintw(44, COL_LOCATION, "---------------------------------------------------------"
-							   "---------------------------");
-	mvprintw(45, COL_LOCATION, "STATISTICS");
-	mvprintw(46, COL_LOCATION, "----------");	
-
-	mvprintw(53, COL_LOCATION, "---------------------------------------------------------"
-							   "---------------------------");	
-}
-
 
 
 //////////////////////////////////////////////////////////////////////////////////////////
