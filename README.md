@@ -8,4 +8,4 @@ My purpose is to allow programmeres new to C++ who want to actually focus on wri
 
 
 
-See more at dilloncb.com
+[See more here](http://dillonbostwick.org/2016/04/15/css3-animations/)
